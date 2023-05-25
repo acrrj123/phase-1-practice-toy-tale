@@ -14,25 +14,29 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// Fetch Andy's Toys from the server. With the response data, make a <div class="card"> for each toy and add it to the toy-collection div.
+// Fetch Andy's Toys from the server. 
 
 fetch('http://localhost:3000/toys')
 .then(resp => resp.json())
 //.then(data => console.log(data))
-.then(data => makeCard(data))
+.then(data => data.forEach(toy => makeCard(toy)))
 
-function makeCard(arrayToys) {
-  let divToys = document.querySelector('#toy-collection');
-  arrayToys.forEach(toy => {
+// With the response data, make a <div class="card"> for each toy and add it to the toy-collection div. Then, add toy info to the card.
+
+function makeCard(toy) {
+    let divToys = document.querySelector('#toy-collection');
     let card = document.createElement('div');
     card.className = 'card';
+    card.innerHTML = `
+    <h2>${toy.name}</h2>
+    <img src="${toy.image}" class="toy-avatar">
+    <p>${toy.likes}</p>
+    <button class="like-btn" id=${toy.id}>Like ❤️</button>`
     divToys.appendChild(card)
-  })
-}
+    //console.log(card)
+  }
 
-// card.innerHTML = `
-    // <h2>${toy.name}</h2>
-    // <img src="${toy.image}" class="toy-avatar">
-    // <p>${likes}</p>
-    // <button class="like-btn" id=${id}>Like ❤️</button> 
-    //
+
+
+
+    

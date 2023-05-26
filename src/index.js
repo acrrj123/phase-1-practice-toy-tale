@@ -18,7 +18,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 fetch('http://localhost:3000/toys')
 .then(resp => resp.json())
-//.then(data => console.log(data))
 .then(data => data.forEach(toy => makeCard(toy)))
 
 // With the response data, make a <div class="card"> for each toy and add it to the toy-collection div. Then, add toy info to the card.
@@ -32,15 +31,20 @@ function makeCard(toy) {
     <img src="${toy.image}" class="toy-avatar">
     <p>${toy.likes}</p>
     <button class="like-btn" id=${toy.id}>Like ❤️</button>`
+    
+    card.querySelector('.like-btn').addEventListener('click', () => {
+      toy.likes+= 1
+      card.querySelector('p').textContent = toy.likes
+      updateLikes(toy)
+    })
+  
     divToys.appendChild(card)
-    //console.log(card)
   }
 
 // Add a new toy. When a user submits the toy form, send a POST request to add the new toy to Andy's Toy Collection. If the post is successful, the toy should be added to the DOM without reloading the page.
-// Firstly, add the event listener 'submit' to the form. 
 
 const form = document.querySelector('.add-toy-form')
-//console.log(form)
+
 form.addEventListener('submit', handleSubmit)
 
 function handleSubmit (e) {
@@ -57,9 +61,7 @@ function handleSubmit (e) {
 }
 
 // Then, make the POST request
-
 function post(toyObj) {
-
   const configObj = {
     method: 'POST',
     headers: {
@@ -68,11 +70,26 @@ function post(toyObj) {
     },
     body: JSON.stringify(toyObj)
   };
-
   fetch('http://localhost:3000/toys', configObj)
   .then(res => res.json())
-.then(toy => console.log(toy))
+  .then(toy => console.log(toy))
 }
+
+// The Patch request
+function updateLikes(toyObj) {
+  fetch(`http://localhost:3000/toys/${toyObj.id}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json'
+    },
+    body: JSON.stringify(toyObj)
+  })
+  .then(resp => resp.json())
+  .then(toy => console.log(toy))
+}
+
+
 
 
 

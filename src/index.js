@@ -36,6 +36,44 @@ function makeCard(toy) {
     //console.log(card)
   }
 
+// Add a new toy. When a user submits the toy form, send a POST request to add the new toy to Andy's Toy Collection. If the post is successful, the toy should be added to the DOM without reloading the page.
+// Firstly, add the event listener 'submit' to the form. 
+
+const form = document.querySelector('.add-toy-form')
+//console.log(form)
+form.addEventListener('submit', handleSubmit)
+
+function handleSubmit (e) {
+  e.preventDefault()
+  //console.log(e.target.name)
+  let toyObj = {
+    name: e.target.name.value,
+    image: e.target.image.value,
+    likes: 0
+  }
+  makeCard(toyObj)
+  post(toyObj)
+  e.target.reset()
+}
+
+// Then, make the POST request
+
+function post(toyObj) {
+
+  const configObj = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json'
+    },
+    body: JSON.stringify(toyObj)
+  };
+
+  fetch('http://localhost:3000/toys', configObj)
+  .then(res => res.json())
+.then(toy => console.log(toy))
+}
+
 
 
 

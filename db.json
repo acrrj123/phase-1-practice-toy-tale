@@ -4,7 +4,7 @@
       "id": 1,
       "name": "Woody",
       "image": "http://www.pngmart.com/files/3/Toy-Story-Woody-PNG-Photos.png",
-      "likes": 38
+      "likes": 51
     },
     {
       "id": 2,
@@ -49,28 +49,22 @@
       "likes": 6
     },
     {
-      "name": "Woody",
-      "image": "http://www.pngmart.com/files/3/Toy-Story-Woody-PNG-Photos.png",
+      "name": "",
+      "image": "",
       "likes": 3,
       "id": 9
     },
     {
       "name": "Woody",
       "image": "http://www.pngmart.com/files/3/Toy-Story-Woody-PNG-Photos.png",
-      "likes": 5,
+      "likes": 4,
       "id": 10
     },
     {
       "name": "Woody",
       "image": "http://www.pngmart.com/files/3/Toy-Story-Woody-PNG-Photos.png",
-      "likes": 4,
+      "likes": 0,
       "id": 11
-    },
-    {
-      "name": "Woody",
-      "image": "http://www.pngmart.com/files/3/Toy-Story-Woody-PNG-Photos.png",
-      "likes": 21,
-      "id": 12
     }
   ]
 }

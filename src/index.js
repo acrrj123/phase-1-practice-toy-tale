@@ -26,13 +26,15 @@ function makeCard(toy) {
     let divToys = document.querySelector('#toy-collection');
     let card = document.createElement('div');
     card.className = 'card';
+
     card.innerHTML = `
     <h2>${toy.name}</h2>
     <img src="${toy.image}" class="toy-avatar">
-    <p>${toy.likes}</p>
+    <p>${toy.likes} likes</p>
     <button class="like-btn" id=${toy.id}>Like ❤️</button>`
     
-    card.querySelector('.like-btn').addEventListener('click', () => {
+    const likeBtn = card.querySelector('.like-btn')
+    likeBtn.addEventListener('click', () => {
       toy.likes+= 1
       card.querySelector('p').textContent = toy.likes
       updateLikes(toy)
@@ -88,7 +90,6 @@ function updateLikes(toyObj) {
   .then(resp => resp.json())
   .then(toy => console.log(toy))
 }
-
 
 
 

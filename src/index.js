@@ -88,4 +88,3 @@ function updateLikes(id, newNumberOfLikes) {
 }
 
 
-

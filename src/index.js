@@ -1,4 +1,103 @@
 let addToy = false;
+const container = document.getElementById('toy-collection')
+const form = document.querySelector('.add-toy-form')
+
+document.addEventListener("DOMContentLoaded", () => {
+  const addBtn = document.querySelector("#new-toy-btn");
+  const toyFormContainer = document.querySelector(".container");
+  addBtn.addEventListener("click", () => {
+    // hide & seek with the form
+    addToy = !addToy;
+    if (addToy) {
+      toyFormContainer.style.display = "block";
+    } else {
+      toyFormContainer.style.display = "none";
+    }
+  });
+});
+
+fetch('http://localhost:3000/toys')
+.then(resp => resp.json())
+.then(toysArr => renderToys(toysArr))
+
+function renderToys(toysArr) {
+  toysArr.forEach(toy => {
+
+    const card = document.createElement('div')
+    card.className = 'card'
+
+    const name = document.createElement('h2')
+    name.textContent = toy.name
+
+    const image = document.createElement('img')
+    image.src = toy.image
+    image.className = 'toy-avatar'
+
+    const likes = document.createElement('p')
+    likes.textContent = `${toy.likes} likes`
+
+    const button = document.createElement('button')
+    button.textContent = 'Like ❤️'
+    button.className = 'like-btn'
+    button.setAttribute('id', `${toy.id}`)
+
+    button.addEventListener('click', () => {
+      likes.textContent = `${toy.likes += 1} likes`
+      patchLikes(toy.id, toy.likes)
+    })
+
+    card.append(name, image, likes, button)
+    container.append(card)
+  })
+}
+
+function patchLikes(id, newLikes) {
+  fetch(`http://localhost:3000/toys/${id}`, {
+  method: 'PATCH',
+  headers:
+    {
+      "Content-Type": "application/json",
+      Accept: "application/json"
+    },
+  body: JSON.stringify({likes: newLikes})
+  })
+  .then(resp => resp.json())
+}
+
+form.addEventListener('submit', e => {
+  e.preventDefault()
+  const inputName = e.target.name.value 
+  const inputImage = e.target.image.value
+  const newObj = {
+    name: inputName,
+    image: inputImage,
+    likes: 0
+  }
+  postToy(newObj)
+  e.target.reset()
+})
+
+function postToy(newObj) {
+  fetch('http://localhost:3000/toys', {
+  method: 'POST',
+  headers:
+    {
+      "Content-Type": "application/json",
+      Accept: "application/json"
+    },
+  body: JSON.stringify(newObj)
+  })
+  .then(resp => resp.json())
+  .then(newObj => {
+    newArr =[]
+    newArr.push(newObj)
+    renderToys(newArr)
+  })
+}
+
+/* Other solution:
+
+let addToy = false;
 
 document.addEventListener("DOMContentLoaded", () => {
   const addBtn = document.querySelector("#new-toy-btn");
@@ -86,5 +185,10 @@ function updateLikes(id, newNumberOfLikes) {
   .then(resp => resp.json())
   .then(updatedToy => console.log(updatedToy))
 }
+*/
+
+
+
+
 
 
